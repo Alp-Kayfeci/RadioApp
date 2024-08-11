@@ -33,93 +33,50 @@ namespace WindowsFormsApp7
         public Form1()
         {
             InitializeComponent();
-            InitializeCustomComponents();
         }
 
         private void Form1_load(object sender, EventArgs e)
         {
-            LoadCurrentRadyo();
+            RefreshButtons();
+            MarqueeForm();
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
+        private void RefreshButtons()
         {
-            LoadCurrentRadyo();
-
-        }
-
-        private void LoadCurrentRadyo()
-        {
-            if (currentIndex >= 0 && currentIndex < radyoUrls.Length)
+            List<Radyo> list = Operations.getRadyoURL();
+            int yPosition = 10;
+            foreach (Radyo radyo in list) 
             {
-                mediaPlayer.URL = radyoUrls[currentIndex];
-                mediaPlayer.Ctlcontrols.play();
+                string radioName = radyo.RadyoAdi;
+                string radioURL = radyo.RadyoUrl;
+
+                Button radioButton = new Button
+                {
+                    Text = radioName,
+                    Width = 370,
+                    Height = 30,
+                    Top = yPosition,
+                    Left = 10
+                };
+
+                radioButton.Click += (sender, e) => PlayRadio(radioName, radioURL);
+
+                panel1.Controls.Add(radioButton);
+
+                yPosition += 40;
+
+
             }
         }
 
-        private void nextButton_Click(object sender, EventArgs e)
+        private void PlayRadio(string radioName, string url)
         {
-            if (currentIndex < radyoUrls.Length - 1)
-            {
-                currentIndex++;
-                LoadCurrentRadyo();
-            }
+            axWindowsMediaPlayer1.URL = url;
+            axWindowsMediaPlayer1.Ctlcontrols.play();
         }
 
-        private void previousButton_Click(object sender, EventArgs e)
-        {
-            if (currentIndex > 0)
-            {
-                currentIndex--;
-                LoadCurrentRadyo();
-            }
-        }
-
-        private void playButton_Click(object sender, EventArgs e)
-        {
-            mediaPlayer.Ctlcontrols.play();
-        }
-
-        private void stopButton_Click(object sender, EventArgs e)
-        {
-            mediaPlayer.Ctlcontrols.stop();
-        }
-
-        private void InitializeCustomComponents()
-        {
-          
-            mediaPlayer = new AxWindowsMediaPlayer();
-            mediaPlayer.CreateControl();
-            mediaPlayer.Name = "mediaPlayer";
-            mediaPlayer.Size = new System.Drawing.Size(300, 45);
-            mediaPlayer.Location = new System.Drawing.Point(12, 180);
-            this.Controls.Add(mediaPlayer);
-
-         
-            Button playButton = new Button();
-            playButton.Text = "Play";
-            playButton.Location = new System.Drawing.Point(12, 230);
-            playButton.Click += playButton_Click;
-            this.Controls.Add(playButton);
-
-            Button stopButton = new Button();
-            stopButton.Text = "Stop";
-            stopButton.Location = new System.Drawing.Point(100, 230);
-            stopButton.Click += stopButton_Click;
-            this.Controls.Add(stopButton);
-
-          
-            Button nextButton = new Button();
-            nextButton.Text = "Next";
-            nextButton.Location = new System.Drawing.Point(12, 270);
-            nextButton.Click += nextButton_Click;
-            this.Controls.Add(nextButton);
-
-            Button previousButton = new Button();
-            previousButton.Text = "Previous";
-            previousButton.Location = new System.Drawing.Point(100, 270);
-            previousButton.Click += previousButton_Click;
-            this.Controls.Add(previousButton);
-        }
+    
+     
 
         public class User
         {
@@ -159,7 +116,45 @@ namespace WindowsFormsApp7
 
         private void button1_Click(object sender, EventArgs e)
         {
-            mediaPlayer.Ctlcontrols.play();
+            axWindowsMediaPlayer1.Ctlcontrols.play();
+        }
+        private Label marqueeLabel;
+        private Timer timer;
+        private int labelX;
+        public void MarqueeForm()
+        {
+
+            marqueeLabel = new Label
+            {
+                Text = Operations.kayarYazi,
+                AutoSize = true,
+                Location = new System.Drawing.Point(-400 ,30),
+            };
+
+            panel2.Controls.Add(marqueeLabel);
+
+            timer = new Timer
+            {
+                Interval = 50
+            };
+
+            timer.Tick += Timer_Tick;
+            timer.Start();
+
+            labelX = panel2.Width;
+
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            labelX -= 5;
+            marqueeLabel.Location = new System.Drawing.Point(labelX, marqueeLabel.Location.Y);
+
+            if(labelX + marqueeLabel.Width < 0)
+            {
+                labelX = panel2.Width;
+            }
+
         }
 
        
