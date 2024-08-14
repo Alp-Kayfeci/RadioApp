@@ -98,6 +98,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Kayıt.cs" />
     <Compile Include="Operations.cs" />
     <Compile Include="Radyo.cs" />
     <Compile Include="Form1.cs">

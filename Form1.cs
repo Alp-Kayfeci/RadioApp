@@ -14,29 +14,25 @@ namespace WindowsFormsApp7
 {
     public partial class Form1 : Form
     {
-       
-        
-        public string[] radyoUrls = new string[]
-    {
-          "http://46.20.7.125/listen.pls",
-            "http://provisioning.streamtheworld.com/pls/METRO_FMAAC.pls",
-            "http://shoutcast.radyogrup.com:1010/;",
-            "http://yayin.netradyom.com:8050/PARKFM/;",
-            "http://37.247.98.17/;",
-            "http://mega.netradyom.com:7900/;",
-            "http://kralpopwmp.radyotvonline.com/"
-    };
 
-        private int currentIndex = 1;
-        public AxWindowsMediaPlayer mediaPlayer;
-
+        private List<Radyo> radyoList;
+        private int currentIndex = 0;
+      
         public Form1()
         {
             InitializeComponent();
+            
         }
 
         private void Form1_load(object sender, EventArgs e)
         {
+            radyoList = Operations.getRadyoURL(); 
+            if (radyoList == null || radyoList.Count == 0)
+            {
+                MessageBox.Show("Radyo listesi yüklenemedi.", "Hata");
+                return;
+            }
+
             RefreshButtons();
             MarqueeForm();
         }
@@ -44,7 +40,7 @@ namespace WindowsFormsApp7
         private void RefreshButtons()
         {
             List<Radyo> list = Operations.getRadyoURL();
-            int yPosition = 10;
+        int yPosition = 10;
             foreach (Radyo radyo in list) 
             {
                 string radioName = radyo.RadyoAdi;
@@ -63,7 +59,7 @@ namespace WindowsFormsApp7
 
                 panel1.Controls.Add(radioButton);
 
-                yPosition += 40;
+                yPosition += 55;
 
 
             }
@@ -71,8 +67,10 @@ namespace WindowsFormsApp7
 
         private void PlayRadio(string radioName, string url)
         {
-            axWindowsMediaPlayer1.URL = url;
+             
+        axWindowsMediaPlayer1.URL = url;
             axWindowsMediaPlayer1.Ctlcontrols.play();
+            currentIndex = radyoList.FindIndex(r => r.RadyoUrl == url);
         }
 
     
@@ -157,6 +155,35 @@ namespace WindowsFormsApp7
 
         }
 
-       
+        private void stopButton_Click(object sender, EventArgs e)
+        {
+            axWindowsMediaPlayer1.Ctlcontrols.stop();
+        }
+
+        private void prevıousButton_Click(object sender, EventArgs e)
+        {
+            if (currentIndex > 0)
+            {
+                currentIndex--;
+                PlayRadio(radyoList[currentIndex].RadyoAdi, radyoList[currentIndex].RadyoUrl);
+            }
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Random random = new Random();
+            currentIndex = random.Next(radyoList.Count);
+            PlayRadio(radyoList[currentIndex].RadyoAdi, radyoList[currentIndex].RadyoUrl);
+        }
+
+        private void nextButton_Click(object sender, EventArgs e)
+        {
+            if (currentIndex < radyoList.Count - 1)
+            {
+                currentIndex++;
+                PlayRadio(radyoList[currentIndex].RadyoAdi, radyoList[currentIndex].RadyoUrl);
+            }
+        }
     }
 }
