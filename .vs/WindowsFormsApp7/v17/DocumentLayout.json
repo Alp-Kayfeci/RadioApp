@@ -7,11 +7,7 @@
       "RelativeMoniker": "D:0:0:{1182623D-6292-42BA-B43A-11642EAF4E7C}|WindowsFormsApp7.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1182623D-6292-42BA-B43A-11642EAF4E7C}|WindowsFormsApp7.csproj|c:\\users\\murat\\desktop\\alpradyo\\radioapp\\operations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1182623D-6292-42BA-B43A-11642EAF4E7C}|WindowsFormsApp7.csproj|solutionrelative:operations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1182623D-6292-42BA-B43A-11642EAF4E7C}|WindowsFormsApp7.csproj|c:\\users\\murat\\desktop\\alpradyo\\radioapp\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{1182623D-6292-42BA-B43A-11642EAF4E7C}|WindowsFormsApp7.csproj|C:\\Users\\Murat\\Desktop\\alpradyo\\RadioApp\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{1182623D-6292-42BA-B43A-11642EAF4E7C}|WindowsFormsApp7.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
@@ -32,14 +28,14 @@
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "C:\\Users\\Murat\\Desktop\\alpradyo\\RadioApp\\Form1.cs",
               "RelativeToolTip": "Form1.cs",
-              "ViewState": "AQIAAHwAAAAAAAAAAAD4v38AAAANAAAA",
+              "ViewState": "AQIAAA4AAAAAAAAAAAA3wCEAAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-11T14:25:07.291Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Form1.cs [Design]",
               "DocumentMoniker": "C:\\Users\\Murat\\Desktop\\alpradyo\\RadioApp\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
@@ -48,19 +44,6 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-11T14:23:33.638Z",
               "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Operations.cs",
-              "DocumentMoniker": "C:\\Users\\Murat\\Desktop\\alpradyo\\RadioApp\\Operations.cs",
-              "RelativeDocumentMoniker": "Operations.cs",
-              "ToolTip": "C:\\Users\\Murat\\Desktop\\alpradyo\\RadioApp\\Operations.cs",
-              "RelativeToolTip": "Operations.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB0AAAAfAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-11T14:23:03.846Z",
-              "EditorCaption": ""
             }
           ]
         }

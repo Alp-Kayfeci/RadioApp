@@ -16,6 +16,7 @@ namespace WindowsFormsApp7
     {
 
         private List<Radyo> radyoList;
+        private Radyo currentRadyo;
         private int currentIndex = 0;
       
         public Form1()
@@ -30,21 +31,31 @@ namespace WindowsFormsApp7
             if (radyoList == null || radyoList.Count == 0)
             {
                 MessageBox.Show("Radyo listesi yüklenemedi.", "Hata");
-                return;
+                
+                Application.Exit();
             }
+            axWindowsMediaPlayer1.settings.volume = 20;
 
             RefreshButtons();
             MarqueeForm();
+            setTimer();
         }
 
         private void RefreshButtons()
         {
             List<Radyo> list = Operations.getRadyoURL();
-        int yPosition = 10;
+            int yPosition = 10;
+            bool ilkYuklenmedeMevcutRadyoAtama = true;
             foreach (Radyo radyo in list) 
             {
                 string radioName = radyo.RadyoAdi;
                 string radioURL = radyo.RadyoUrl;
+
+                if (ilkYuklenmedeMevcutRadyoAtama)
+                {
+                    currentRadyo = radyo;
+                    ilkYuklenmedeMevcutRadyoAtama = false;
+                }
 
                 Button radioButton = new Button
                 {
@@ -55,7 +66,7 @@ namespace WindowsFormsApp7
                     Left = 10
                 };
 
-                radioButton.Click += (sender, e) => PlayRadio(radioName, radioURL);
+                radioButton.Click += (sender, e) => PlayRadio(radyo);
 
                 panel1.Controls.Add(radioButton);
 
@@ -65,57 +76,22 @@ namespace WindowsFormsApp7
             }
         }
 
-        private void PlayRadio(string radioName, string url)
+        private void PlayRadio(Radyo radyo)
         {
-             
-        axWindowsMediaPlayer1.URL = url;
+            label1.Text = radyo.RadyoAdi;
+            axWindowsMediaPlayer1.URL = radyo.RadyoUrl;
             axWindowsMediaPlayer1.Ctlcontrols.play();
-            currentIndex = radyoList.FindIndex(r => r.RadyoUrl == url);
+            currentIndex = radyoList.FindIndex(r => r.RadyoUrl == radyo.RadyoUrl);
         }
 
     
-     
-
-        public class User
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
-            public string Mail { get; set; }
-            public string Sifre { get; set; }
-            public bool PremiumStatus { get; set; }
-            public DateTime RegisterDate { get; set; }
-        }
-
-        public class Message
-        {
-            public int Id { get; set; }
-            public int SenderId { get; set; }
-            public int ReceiverId { get; set; }
-            public string MessageContent { get; set; }
-            public DateTime Date { get; set; }
-            public bool Status { get; set; }
-        }
-
-   
-        public class RadyoLog
-        {
-            public int Id { get; set; }
-            public int RadyoId { get; set; }
-            public int UserId { get; set; }
-            public DateTime Date { get; set; }
-        }
-
-        public class LoginLog
-        {
-            public int Id { get; set; }
-            public int UserId { get; set; }
-            public DateTime Date { get; set; }
-        }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            axWindowsMediaPlayer1.Ctlcontrols.play();
+            
+            PlayRadio(currentRadyo);
         }
+
         private Label marqueeLabel;
         private Timer timer;
         private int labelX;
@@ -165,7 +141,12 @@ namespace WindowsFormsApp7
             if (currentIndex > 0)
             {
                 currentIndex--;
-                PlayRadio(radyoList[currentIndex].RadyoAdi, radyoList[currentIndex].RadyoUrl);
+                PlayRadio(radyoList[currentIndex]);
+            }
+            else
+            {
+                currentIndex = radyoList.Count - 1;
+                PlayRadio(radyoList[currentIndex]); 
             }
 
         }
@@ -174,7 +155,7 @@ namespace WindowsFormsApp7
         {
             Random random = new Random();
             currentIndex = random.Next(radyoList.Count);
-            PlayRadio(radyoList[currentIndex].RadyoAdi, radyoList[currentIndex].RadyoUrl);
+            PlayRadio(radyoList[currentIndex]);
         }
 
         private void nextButton_Click(object sender, EventArgs e)
@@ -182,8 +163,78 @@ namespace WindowsFormsApp7
             if (currentIndex < radyoList.Count - 1)
             {
                 currentIndex++;
-                PlayRadio(radyoList[currentIndex].RadyoAdi, radyoList[currentIndex].RadyoUrl);
+                PlayRadio(radyoList[currentIndex]);
+            }
+            else
+            {
+                currentIndex = 0;
+                PlayRadio(radyoList[currentIndex]);
             }
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            Register register = new Register();
+            register.ShowDialog();
+            
+        }
+
+        private void playButton_MouseEnter(object sender, EventArgs e)
+        {
+            playButton.BackColor = Color.Green;
+
+        }
+
+        private void playButton_MouseHover(object sender, EventArgs e)
+        {
+            playButton.BackColor = Color.Green;
+
+        }
+
+        private void playButton_MouseLeave(object sender, EventArgs e)
+        {
+            playButton.BackColor = Color.GreenYellow;
+        }
+
+        private void playButton_MouseDown(object sender, MouseEventArgs e)
+        {
+            playButton.BackColor = Color.DarkGreen;
+        }
+
+        private void playButton_MouseUp(object sender, MouseEventArgs e)
+        {
+            playButton.BackColor = Color.Green;
+        }
+
+        private void setTimer()
+        {
+            timer1.Interval = 1000 * 15 * 60;
+            timer1.Start();
+            this.MouseMove += awaySayacSifirla;
+            this.KeyPress += awaySayacSifirla;
+        }
+        int awaySayac;
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            awaySayac++;
+            Console.WriteLine(awaySayac);
+            if (awaySayac >= 2)
+            {
+                timer1.Stop();
+                Console.WriteLine("UYGULAMA SONLANDIRILDI!");
+            }
+
+            axWindowsMediaPlayer1.Ctlcontrols.stop();
+            MessageBox.Show("Premium üyelik almak ister misiniz?");
+            
+        }
+
+        private void awaySayacSifirla(object sender, EventArgs e)
+        {
+            awaySayac = 0;
+
+        }
+
+
     }
 }

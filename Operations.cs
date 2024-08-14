@@ -15,19 +15,27 @@ namespace WindowsFormsApp7
         public static List<Radyo> getRadyoURL()
         {
             List<Radyo> list = new List<Radyo>();
-            string query = "select * FROM radyolar";
-            connection.Open();
-            MySqlCommand command =  new MySqlCommand(query, connection);
-            MySqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
+            try
             {
-                Radyo radyo = new Radyo();
-                radyo.Id = reader.GetInt32("id");
-                radyo.RadyoAdi = reader.GetString("radyo_adi");
-                radyo.RadyoUrl = reader.GetString("radyo_url");
-                list.Add(radyo);
+                string query = "select * FROM radyolar";
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(query, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Radyo radyo = new Radyo();
+                    radyo.Id = reader.GetInt32("id");
+                    radyo.RadyoAdi = reader.GetString("radyo_adi");
+                    radyo.RadyoUrl = reader.GetString("radyo_url");
+                    list.Add(radyo);
+                }
+                connection.Close();
             }
-            connection.Close();
+            catch (Exception)
+            {
+
+            }
+            
 
             return list;
         }
